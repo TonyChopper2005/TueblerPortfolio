@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tuebler Campoas | IT Student Portfolio</title>
+<meta name="description" content="Portfolio of Tuebler Campoas, IT student focused on networking, security and web development.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f8fb;
+    --surface: #ffffff;
+    --ink: #172033;
+    --muted: #5a6478;
+    --line: #dde3ec;
+    --accent: #1f5fd1;
+    --accent-ink: #ffffff;
+    --term-bg: #172033;
+    --term-ink: #dbe4f5;
+    --term-dim: #8b99b5;
+    --term-ok: #7fd1a3;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1522;
+      --surface: #171f31;
+      --ink: #e8edf7;
+      --muted: #9aa6bd;
+      --line: #28324a;
+      --accent: #6ea2ff;
+      --accent-ink: #0f1522;
+      --term-bg: #0a0f1a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* Navigation */
+  header.site {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  header.site .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .brand { font-weight: 600; color: var(--ink); text-decoration: none; }
+  nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 15px; }
+  nav a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero { padding: 72px 0 64px; }
+  .hero .wrap {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin: 0 0 18px;
+  }
+  .lead { color: var(--muted); font-size: 1.1rem; max-width: 34em; margin: 0 0 28px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-block; padding: 11px 20px; border-radius: 6px;
+    font-weight: 500; font-size: 15px; text-decoration: none;
+    border: 1px solid var(--accent);
+  }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn.ghost { color: var(--accent); background: transparent; }
+  .btn.ghost:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+
+  .terminal {
+    background: var(--term-bg);
+    color: var(--term-ink);
+    border-radius: 10px;
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .terminal .bar {
+    display: flex; gap: 7px; padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .terminal .bar i { width: 10px; height: 10px; border-radius: 50%; background: #3a4663; display: block; }
+  .terminal .body { padding: 18px 20px 22px; }
+  .terminal p { margin: 0; }
+  .terminal .cmd::before { content: "$ "; color: var(--term-ok); }
+  .terminal .out { color: var(--term-dim); margin-bottom: 10px; }
+  .terminal .cursor {
+    display: inline-block; width: 8px; height: 16px; background: var(--term-ink);
+    vertical-align: text-bottom; animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Sections */
+  section.block { padding: 64px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 1.6rem; letter-spacing: -0.01em; margin: 0 0 28px; font-weight: 600; }
+  h3 { font-size: 1.1rem; margin: 0 0 6px; font-weight: 600; }
+  .about p { max-width: 38em; margin: 0 0 16px; }
+  .about p:last-child { margin-bottom: 0; }
+  .about-grid { display: grid; grid-template-columns: 1fr 260px; gap: 48px; align-items: start; }
+
+  /* Picture frames: pogi checking */
+  .frame {
+    position: relative;
+    aspect-ratio: var(--ratio, 16 / 10);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px dashed var(--line);
+  }
+  .frame::before {
+    content: attr(data-label);
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    padding: 12px; text-align: center;
+    font-family: var(--mono); font-size: 12px; line-height: 1.5;
+    color: var(--muted); white-space: pre-line;
+  }
+  .frame img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    background: var(--surface);
+  }
+  .frame:has(img:not([hidden])) { border-style: solid; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .skill-group {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 8px; padding: 20px;
+  }
+  .skill-group h3 { font-size: 1rem; margin-bottom: 12px; }
+  .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tags li {
+    font-family: var(--mono); font-size: 13px;
+    padding: 3px 10px; border-radius: 4px;
+    background: var(--bg); border: 1px solid var(--line); color: var(--ink);
+  }
+
+  /* Projects */
+  .project {
+    display: grid; grid-template-columns: 220px 1fr auto; gap: 8px 28px; align-items: start;
+    padding: 28px 0; border-bottom: 1px solid var(--line);
+  }
+  .project:first-of-type { padding-top: 0; }
+  .project:last-of-type { border-bottom: 0; padding-bottom: 0; }
+  .project p { margin: 0 0 12px; color: var(--muted); max-width: 40em; }
+  .project .links { display: flex; gap: 16px; align-items: start; font-size: 15px; white-space: nowrap; }
+
+  /* Timeline (education is a real sequence) */
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 22px; border-left: 2px solid var(--line); }
+  .timeline li { position: relative; padding-bottom: 28px; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before {
+    content: ""; position: absolute; left: -29px; top: 9px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--accent);
+  }
+  .timeline .when { font-size: 14px; color: var(--muted); font-family: var(--mono); }
+  .timeline p { margin: 4px 0 0; color: var(--muted); max-width: 38em; }
+
+  /* Contact */
+  .contact p { max-width: 34em; margin: 0 0 20px; }
+  .contact-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+
+  footer { padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+  @media (max-width: 760px) {
+    .hero { padding: 44px 0; }
+    .hero .wrap { grid-template-columns: 1fr; gap: 36px; }
+    nav ul { gap: 14px; }
+    .project { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 28px; }
+    .about-grid .frame { order: -1; max-width: 220px; }
+    .brand { display: none; }
+    header.site .wrap { justify-content: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .terminal .cursor { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top">Tuebler Campoas</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO: Main attraction - ultimate sex appeal -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Hi, I'm Tuebler Campoas, a BSIT student who builds and secures things.</h1>
+        <p class="lead">I'm studying Information Technology with a focus on networking, cybersecurity and web development. I'm looking for an internship or opportunities where I can learn from a real team and ship useful work.</p>
+        <div class="actions">
+          <a class="btn primary" href="#projects">View my projects</a>
+          <a class="btn ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+      <div class="terminal" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <div class="body">
+          <p class="cmd">who I am</p>
+          <p class="out">Tuebler Campoas, BSIT student, Majoring in Web Technology</p>
+          <p class="cmd">Main focus.txt</p>
+          <p class="out">networking, security, web dev and Many more!</p>
+          <p class="cmd">status</p>
+          <p class="out">open to internships and commissions</p>
+          <p class="cmd"><span class="cursor"></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="block about" id="about">
+    <div class="wrap">
+      <h2>About me</h2>
+      <div class="about-grid">
+        <div>
+          <p>I'm a first-year BSIT student at the University of the Cordilleras. I got into technology by taking apart old computers and setting up a home network or servers, and I've been learning how systems fit together ever since.</p>
+          <p>I enjoy troubleshooting, documenting what I learn, and turning class concepts into working projects. Outside of study, I enjoy doing things that further challenge my capabilities.</p>
+        </div>
+        <!-- PROFILE PHOTO: replace images/profile.jpg (portrait, 4:5, about 800 x 1000 px) -->
+        <div class="frame" style="--ratio: 4 / 5" data-label="Profile photo&#10;images/profile.jpg&#10;800 x 1000 px">
+          <img src="Profile.png.jfif" alt="Portrait of Tuebler Campoas" loading="lazy" onerror="this.hidden=true">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS: Aura Farming -->
+  <section class="block" id="skills">
+    <div class="wrap">
+      <h2>Skills & Experiences</h2>
+      <div class="skills">
+        <div class="skill-group">
+          <h3>Programming</h3>
+          <ul class="tags"><li>Python</li><li>JavaScript</li><li>Java</li><li>SQL</li><li>Bash</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Web</h3>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>Wordpress</li><li>Figma</li><li>Webflow</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Internships and Experiences</h3>
+          <ul class="tags"><li>Beaureau of Fire Protection</li><li>Hands on Experience with actual scenarios</li><li>Truck Driving</li><li>Handling a wide scale of Applied Research</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Computer System literacy</h3>
+          <ul class="tags"><li>Linux</li><li>Fluency in Software modification</li><li>Reverse Engineering</li><li>Networking</li><li>Security</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS: duplicate a .project block to add more -->
+  <section class="block" id="projects">
+    <div class="wrap">
+      <h2>Projects</h2>
+
+      <article class="project">
+        <!-- PROJECT IMAGE: replace images/project-1.jpg (16:10, about 1200 x 750 px) -->
+        <div class="frame" data-label="Project screenshot&#10;images/project-1.jpg&#10;1200 x 750 px">
+          <img src="images/project-1.jpg" alt="Network diagram of the home lab" loading="lazy" onerror="this.hidden=true">
+        </div>
+        <div>
+          <h3>Home lab network</h3>
+          <p>Designed a segmented home network with separate VLANs for devices, guests and a test lab, and documented the setup with diagrams and firewall rules.</p>
+          <ul class="tags"><li>VLANs</li><li>pfSense</li><li>Linux</li></ul>
+        </div>
+        <div class="links">
+          <a href="#">Source</a>
+          <a href="#">Write-up</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <!-- PROJECT IMAGE: replace images/project-2.jpg -->
+        <div class="frame" data-label="Project screenshot&#10;images/project-2.jpg&#10;1200 x 750 px">
+          <img src="images/project-2.jpg" alt="Screenshot of the task tracker app" loading="lazy" onerror="this.hidden=true">
+        </div>
+        <div>
+          <h3>Task tracker web app</h3>
+          <p>Built a small full-stack app for managing study tasks, with user accounts, a REST API and a responsive interface.</p>
+          <ul class="tags"><li>JavaScript</li><li>Node.js</li><li>SQLite</li></ul>
+        </div>
+        <div class="links">
+          <a href="#">Source</a>
+          <a href="#">Live demo</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <!-- PROJECT IMAGE: replace images/project-3.jpg -->
+        <div class="frame" data-label="Project screenshot&#10;images/project-3.jpg&#10;1200 x 750 px">
+          <img src="images/project-3.jpg" alt="Terminal output of the log analysis script" loading="lazy" onerror="this.hidden=true">
+        </div>
+        <div>
+          <h3>Log analysis script</h3>
+          <p>Wrote a Python tool that reads server logs, flags repeated failed logins and exports a summary report for review.</p>
+          <ul class="tags"><li>Python</li><li>Regex</li><li>CSV</li></ul>
+        </div>
+        <div class="links">
+          <a href="#">Source</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- EDUCATION: edit the entries, newest first -->
+  <section class="block" id="education">
+    <div class="wrap">
+      <h2>Education and certifications</h2>
+      <ol class="timeline">
+        <li>
+          <span class="when">2024 to present</span>
+          <h3>BSc in Information Technology, Your University</h3>
+          <p>Relevant courses: data structures, computer networks, databases, operating systems, information security.</p>
+        </li>
+        <li>
+          <span class="when">2025</span>
+          <h3>CompTIA Security+ (in progress)</h3>
+          <p>Studying for the exam alongside coursework.</p>
+        </li>
+        <li>
+          <span class="when">2024</span>
+          <h3>Cisco CCNA: Introduction to Networks</h3>
+          <p>Completed the course and its hands-on labs.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="block contact" id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p>I'm open to internships and entry-level roles. The best way to reach me is by email.</p>
+      <ul class="contact-list">
+        <li>Email: <a href="mailto:tuebler.campoas@example.com">tuebler.campoas@example.com</a></li>
+        <li>GitHub: <a href="https://github.com/tuebler-campoas">github.com/tuebler-campoas</a></li>
+        <li>LinkedIn: <a href="https://linkedin.com/in/tuebler-campoas">linkedin.com/in/tuebler-campoas</a></li>
+        <li>Facebook: <a href="https://www.facebook.com/TUEBLER">facebook.com/TUEBLER</a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">&copy; 2026 Tuebler Campoas</div>
+</footer>
+
+</body>
+</html>
